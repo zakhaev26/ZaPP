@@ -16,7 +16,7 @@ function Homepage() {
         </Text>
       </Box>
 
-      <Box bg='white' w='100%' p={4} borderRadius='lg' borderWidth='1px' h={90}>
+      <Box bg='white' w='100%' p={4} borderRadius='lg' borderWidth='1px' h="fit-content">
 
       <Tabs position="relative" variant="unstyled">
     <TabList>
