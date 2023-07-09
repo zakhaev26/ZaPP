@@ -12,7 +12,7 @@ function Homepage() {
       p={3}
       m="40px 0 15px 0" borderRadius='lg' borderWidth='1px' backgroundColor='white'>
         <Text fontSize='4xl' fontFamily='Raleway' color='black' textAlign='center'>
-          ZaPP!
+          ZaPP!⚡
         </Text>
       </Box>
 
