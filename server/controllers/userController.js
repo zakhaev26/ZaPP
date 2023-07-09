@@ -1,46 +1,74 @@
 import asyncHandler from "express-async-handler"
 import User from "../db/models/userModel.js";
 import generateToken from "../config/generateToken.js";
-const registerUser = asyncHandler(async (req,res) =>{
-    console.log('Requested Resources!')
-    const {name,email,password,pic} = req.body;
+import md5 from "md5";
 
-    if(!(name&&email&&password)){
+export const registerUser = asyncHandler(async (req, res) => {
+
+    const { name, email, password, pic } = req.body;
+
+    if (!(name && email && password)) {
         res.status(400);
         throw new Error("Please Enter All the Fields!");
     }
 
     const userExists = await User.findOne({
-        email:email
+        email: email
     })
 
-    if(userExists)
-        {
-            res.status(400);
-            throw new Error("User Already Exists!")
-        }
-    else{
+    if (userExists) {
+        res.status(400);
+        throw new Error("User Already Exists!")
+    }
+    else {
         const user = await User.create({
-            name:name,
-            email:email,
-            password:password,
-            pic:pic
+            name: name,
+            email: email,
+            password: md5(password),
+            pic: pic
         })
 
-        if(user){
+        if (user) {
             res.status(201).json({
-                _id:user._id,
-                name:user.name,
-                email:user.email,
-                pic:user.pic,
-                token:generateToken(user._id)
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                pic: user.pic,
+                token: generateToken(user._id)
             })
         }
-        else{
+        else {
             res.status(400);
             throw new Error('Failed to Create the User!')
         }
     }
 })
 
-export default registerUser
+export const userAuth = asyncHandler(async (req, res) => {
+
+    const { email, password } = req.body;
+
+    const user = await User.findOne({
+        email: email
+    })
+
+    if (user) {
+        if(user.password === md5(password)){
+            res.status(201).json({
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                pic: user.pic,
+                token: generateToken(user._id)
+            })
+        }
+        else{
+            res.status(401)
+            throw new Error("Invalid Login Credentials!")
+        }
+    }
+    else {
+        res.status(401);
+        throw new Error('Invalid Email or Password!')
+    }
+})
