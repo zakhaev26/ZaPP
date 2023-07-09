@@ -1,9 +1,9 @@
 import asyncHandler from "express-async-handler"
 import User from "../db/models/userModel.js";
-
+import generateToken from "../config/generateToken.js";
 const registerUser = asyncHandler(async (req,res) =>{
-
-    const {name , email,password,pic} = req.body;
+    console.log('Requested Resources!')
+    const {name,email,password,pic} = req.body;
 
     if(!(name&&email&&password)){
         res.status(400);
