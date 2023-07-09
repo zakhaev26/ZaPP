@@ -4,9 +4,9 @@ import generateToken from "../config/generateToken.js";
 import md5 from "md5";
 
 export const registerUser = asyncHandler(async (req, res) => {
-
+  console.log('Requested Resources!')
     const { name, email, password, pic } = req.body;
-
+    console.log(name,email,password,pic)
     if (!(name && email && password)) {
         res.status(400);
         throw new Error("Please Enter All the Fields!");
@@ -61,6 +61,7 @@ export const userAuth = asyncHandler(async (req, res) => {
                 pic: user.pic,
                 token: generateToken(user._id)
             })
+            console.log("sent with 201!")
         }
         else{
             res.status(401)
