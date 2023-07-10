@@ -72,3 +72,31 @@ export const userAuth = asyncHandler(async (req, res) => {
         throw new Error('Invalid Email or Password!')
     }
 })
+
+
+export const allUsers = asyncHandler(async(req,res)=>{
+
+    // const keyword = req.query.search?{
+    //     $or: [
+    //         {name:{$regex: req.query.search ,$options:'i'}},
+    //         {email:{$regex:req.query.search,$options:'i'}}
+    //     ]
+    // }:null; 
+
+    const {name,email} = req.query;
+    console.log(name,email);
+
+    if(name && email){
+        const user  = await User.where('name').equals(name).where('email').equals(email);
+        console.log(user);
+    }
+    else if(name){
+        const user  = await User.where('name').equals(name);
+        console.log(user);
+    }
+    else{
+        const user  = await User.where('email').equals(email);
+        console.log(user);
+    }
+
+})
