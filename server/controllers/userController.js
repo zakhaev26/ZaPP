@@ -4,9 +4,9 @@ import generateToken from "../config/generateToken.js";
 import md5 from "md5";
 
 export const registerUser = asyncHandler(async (req, res) => {
-  console.log('Requested Resources!')
+    console.log('Requested Resources!')
     const { name, email, password, pic } = req.body;
-    console.log(name,email,password,pic)
+    console.log(name, email, password, pic)
     if (!(name && email && password)) {
         res.status(400);
         throw new Error("Please Enter All the Fields!");
@@ -52,7 +52,7 @@ export const userAuth = asyncHandler(async (req, res) => {
     })
 
     if (user) {
-        if(user.password === md5(password)){
+        if (user.password === md5(password)) {
             res.status(201).json({
                 _id: user._id,
                 name: user.name,
@@ -62,7 +62,7 @@ export const userAuth = asyncHandler(async (req, res) => {
             })
             console.log("sent with 201!")
         }
-        else{
+        else {
             res.status(401)
             throw new Error("Invalid Login Credentials!")
         }
@@ -74,7 +74,7 @@ export const userAuth = asyncHandler(async (req, res) => {
 })
 
 
-export const allUsers = asyncHandler(async(req,res)=>{
+export const allUsers = asyncHandler(async (req, res) => {
 
     // const keyword = req.query.search?{
     //     $or: [
@@ -83,20 +83,22 @@ export const allUsers = asyncHandler(async(req,res)=>{
     //     ]
     // }:null; 
 
-    const {name,email} = req.query;
-    console.log(name,email);
+    const { name, email } = req.query;
+    console.log(name, email);
 
-    if(name && email){
-        const user  = await User.where('name').equals(name).where('email').equals(email);
-        console.log(user);
+    if (name && email) {
+        const user = await User.where('name').equals(name).where('email').equals(email);
+        console.log(user[0]);
+        res.send((user[0]))
     }
-    else if(name){
-        const user  = await User.where('name').equals(name);
-        console.log(user);
+    else if (name) {
+        const user = await User.where('name').equals(name);
+        console.log(user[0]);
+        res.send((user[0]))
     }
-    else{
-        const user  = await User.where('email').equals(email);
-        console.log(user);
+    else {
+        const user = await User.where('email').equals(email);
+        console.log(user[0]);
+        res.send((user[0]))
     }
-
 })
