@@ -92,16 +92,15 @@ function Signup() {
       toast({
         title: `Registration Successful!`,
         description:"Welcome to ZaPP!",
-        status: 'warning',
+        status: 'success',
         duration: 5000,
         isClosable: true,
       })
      
       localStorage.setItem('userInfo',JSON.stringify(data));
-      history.pushState('chats');
+      history.push('/chats');
     
     }catch(e){
-      console.log(e)
       toast({
         title: `Error while Signing up`,
         description:`${e.message}`,        status: 'warning',

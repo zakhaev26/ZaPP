@@ -4,7 +4,7 @@ const Router = express.Router();
 
 Router.post('/',registerUser)
  
-Router.get('/login',userAuth);
+Router.post('/login',userAuth);
 
 
 export default Router;
