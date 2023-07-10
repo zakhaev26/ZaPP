@@ -86,19 +86,23 @@ export const allUsers = asyncHandler(async (req, res) => {
     const { name, email } = req.query;
     console.log(name, email);
 
-    if (name && email) {
-        const user = await User.where('name').equals(name).where('email').equals(email);
-        console.log(user[0]);
-        res.send((user[0]))
-    }
-    else if (name) {
-        const user = await User.where('name').equals(name);
-        console.log(user[0]);
-        res.send((user[0]))
-    }
-    else {
-        const user = await User.where('email').equals(email);
-        console.log(user[0]);
-        res.send((user[0]))
-    }
+    const allusers = await User.find({name:{$ne:name}})
+    console.log(allusers);
+    res.json(allusers);
+    
+    // if (name && email) {
+    //     const user = await User.where('name').equals(name).where('email').equals(email);
+    //     console.log(user[0]);
+    //     res.send((user[0]))
+    // }
+    // else if (name) {
+    //     const user = await User.where('name').equals(name);
+    //     console.log(user[0]);
+    //     res.send((user[0]))
+    // }
+    // else {
+    //     const user = await User.where('email').equals(email);
+    //     console.log(user[0]);
+    //     res.send((user[0]))
+    // }
 })
